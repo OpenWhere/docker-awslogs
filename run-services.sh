@@ -36,6 +36,7 @@ log_group_name = ${GROUPNAME}
 
 EOF
 
+touch /var/log/awslogs.log
 /var/awslogs/bin/awslogs-agent-launcher.sh &
 tail -f /var/log/awslogs.log
 
