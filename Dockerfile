@@ -1,9 +1,8 @@
 FROM ubuntu:latest
-MAINTAINER Ryuta Otaki <otaki.ryuta@classmethod.jp>, Sergey Zhukov <sergey@jetbrains.com>
 
 RUN apt-get update
-RUN apt-get install -q -y python python-pip wget
-RUN cd / ; wget https://s3.amazonaws.com/aws-cloudwatch/downloads/awslogs-agent-setup-v1.0.py
+RUN apt-get install -q -y python python-pip
+ADD https://s3.amazonaws.com/aws-cloudwatch/downloads/awslogs-agent-setup-v1.0.py /awslogs-agent-setup-v1.0.py
 
 ADD awslogs.conf.dummy /
 RUN python /awslogs-agent-setup-v1.0.py -n -r us-east-1 -c ./awslogs.conf.dummy

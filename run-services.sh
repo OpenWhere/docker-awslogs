@@ -18,10 +18,10 @@ trap shutdown_awslogs INT TERM HUP
 # initial_position = start_of_file
 # log_group_name = nginx-server
 
-LOGFILE=${AWS_LOGFILE:-"/mnt/logs/access.log"}
-LOGFORMAT=${AWS_LOGFORMAT:-"%d/%b/%Y:%H:%M:%S %z"}
+LOGFILE=${AWS_LOGFILE:-"/data/log/*.log"}
+LOGFORMAT=${AWS_LOGFORMAT:-"%b %d, %Y %H:%M:%S %p"}
 DURATION=${AWS_DURATION:-"5000"}
-GROUPNAME=${AWS_GROUPNAME:-"nginx-server"}
+GROUPNAME=${AWS_GROUPNAME:-"unknown-server"}
 
 cp -f /awslogs.conf.dummy /var/awslogs/etc/awslogs.conf
 
@@ -37,5 +37,6 @@ log_group_name = ${GROUPNAME}
 EOF
 
 /var/awslogs/bin/awslogs-agent-launcher.sh &
+tail -f /var/log/awslogs.log
 
 wait
